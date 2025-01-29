@@ -1,0 +1,23 @@
+CREATE function [dbo].[BPTOY](@acc int , @year int)
+returns int as
+begin
+	declare @Fday int = dbo.FirstDayInYear(@year)
+	declare @MaxS int=0 , @date int = @Fday , @S int =0 
+	declare @EEday int = dbo.Next10Day(@date)
+	declare @bestSdate int , @bestEdate int
+	while(@EEday <=14030431)
+	begin
+		set @S = dbo.avg_Balance(@acc,@date,@EEday)
+		if (@S>@MaxS) 
+		begin 
+			set @MaxS = @S
+			set @bestSdate = @date
+			set @bestEdate = @EEday
+		end
+		set @date  = dbo.NextDay(@date)
+		set @EEday =  dbo.Next10Day(@date)
+	end
+	return @bestSdate
+end
+
+select dbo.BPTOY(999,1403)

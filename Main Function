@@ -13,11 +13,13 @@ begin
 			set @MaxS = @S
 			set @bestSdate = @date
 			set @bestEdate = @EEday
+
 		end
 		set @date  = dbo.NextDay(@date)
 		set @EEday =  dbo.Next10Day(@date)
 	end
-	return @bestSdate
+	return @MaxS
+
 end
 
 select dbo.BPTOY(999,1403)
